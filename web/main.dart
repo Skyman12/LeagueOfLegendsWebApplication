@@ -5,7 +5,21 @@ import 'dart:html';
 import 'FantasyFootball.dart';
 
 void main() {
+  // listen for the postMessage from the main page
   FantasyFootball fantasyFootball = new FantasyFootball();
-  fantasyFootball.loadData();
-  querySelector('#output').text = 'Your Dart app is testing.';
+  window.onMessage.listen(fantasyFootball.dataReceived);
+  _createScriptTag();
+
+  fantasyFootball.getStockQuote();
+}
+
+void _createScriptTag()
+{
+  String requestString = """function callbackForJsonpApi(s) {
+      s.target="dartJsonHandler";
+    	window.postMessage(JSON.stringify(s), '*');
+    	}""";
+  ScriptElement script = new ScriptElement();
+  script.innerHtml = requestString;
+  document.body.children.add(script);
 }
