@@ -7,7 +7,10 @@ import 'Summoner.dart';
 
 
 Future main() async {
-  Summoner s = await LeagueOfLegendsServerRequests.buildSummoner("skyman12");
+  LeagueOfLegendsServerRequests serverRequests = new LeagueOfLegendsServerRequests();
+  Summoner s = await serverRequests.buildSummoner("cotton85");
   print(s.toString());
+  print(s.getChampionStats().toString());
+
 }
 

@@ -1,10 +1,14 @@
 import "LeagueOfLegendsServerRequests.dart";
+import 'ChampionStats.dart';
+import 'Champion.dart';
+import 'RankedGameStats.dart';
 
 class Summoner {
   int _id;
   String _name;
   int _profileIconId;
   int _summonerLevel;
+  List<ChampionStats> _championStats;
 
 
   Summoner(String summonerName, Map summonerData) {
@@ -28,14 +32,26 @@ class Summoner {
     return _summonerLevel;
   }
 
+  List<ChampionStats> getChampionStats() {
+    return _championStats;
+  }
+
   void _buildBasicSummonerInformation(Map summonerData) {
     _id = summonerData[_name]['id'];
     _profileIconId = summonerData[_name]['profileIconId'];
     _summonerLevel = summonerData[_name]['summonerLevel'];
   }
 
-  void addRankedStatsData(Map data) {
-    print(data.toString());
+  void addRankedStatsData(Map data, Map<int, Champion> championMap) {
+    _championStats = new List();
+    for (Map rankedData in data['champions']) {
+        // Dont want to get 0 -- that is the data for all champions
+        if (rankedData['id'] != 0) {
+          Champion champion = championMap[rankedData['id']];
+          RankedGameStats stats = new RankedGameStats(rankedData['stats']);
+          _championStats.add(new ChampionStats(champion, stats));
+        }
+    }
   }
 
   String toString() {
@@ -45,5 +61,7 @@ class Summoner {
       "\nProfile Icon Id: " + _profileIconId.toString() +
       "\nSummoner Level: " + _summonerLevel.toString();
   }
+
+
 
 }
