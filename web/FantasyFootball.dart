@@ -1,5 +1,5 @@
 import 'dart:html';
-import "dart:js";
+import 'dart:convert';
 
 class FantasyFootball {
 
@@ -9,24 +9,17 @@ class FantasyFootball {
 
   }
 
-  void getStockQuote()
-  {
-    String requestString = "http://www.fantasyfootballnerd.com/service/schedule/xml/6s2562qvn9mg/?format=json&callback=callbackForJsonpApi";
-   //String requestString = "http://finance.yahoo.com/webservice/v1/symbols/" + "2" + "/quote?format=json&callback=callbackForJsonpApi";
+  void loadData() {
+    var url = "http://127.0.0.1:8081/simpleserver.php?action=CreatePost";
 
-    ScriptElement script = new ScriptElement();
-    script.src = requestString;
-    document.body.children.add(script);
+    // call the web server asynchronously
+    var request = HttpRequest.getString(url).then(onDataLoaded);
   }
 
-  void dataReceived(MessageEvent e)
-  {
-    print("here");
-    String s = (e.data as String);
-    print(s);
-
-    // Handle the response
+  // print the raw json response text from the server
+  void onDataLoaded(String responseText) {
+    var jsonString = responseText;
+    Map parsedMap = JSON.decode(jsonString);
+    print(parsedMap['skyman12']["summonerLevel"]);
   }
-
-
 }

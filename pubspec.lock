@@ -21,10 +21,22 @@ packages:
     description: browser
     source: hosted
     version: "0.10.0+2"
+  charcode:
+    description: charcode
+    source: hosted
+    version: "1.1.0"
   collection:
     description: collection
     source: hosted
     version: "1.2.0"
+  convert:
+    description: convert
+    source: hosted
+    version: "1.0.1"
+  crypto:
+    description: crypto
+    source: hosted
+    version: "0.9.1"
   csslib:
     description: csslib
     source: hosted
@@ -41,6 +53,14 @@ packages:
     description: html5lib
     source: hosted
     version: "0.12.1"
+  http:
+    description: http
+    source: hosted
+    version: "0.11.3+2"
+  http_parser:
+    description: http_parser
+    source: hosted
+    version: "1.1.0"
   logging:
     description: logging
     source: hosted
@@ -61,6 +81,14 @@ packages:
     description: stack_trace
     source: hosted
     version: "1.5.0"
+  string_scanner:
+    description: string_scanner
+    source: hosted
+    version: "0.1.4"
+  typed_data:
+    description: typed_data
+    source: hosted
+    version: "1.1.1"
   utf:
     description: utf
     source: hosted
