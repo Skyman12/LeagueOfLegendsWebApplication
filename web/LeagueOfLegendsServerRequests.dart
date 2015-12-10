@@ -44,6 +44,8 @@ class LeagueOfLegendsServerRequests {
 
     // call the web server
     await HttpRequest.getString(championUrl).then(onChampionsLoaded);
+
+    print("here");
   }
 
   Map onSummonerDataLoaded(String responseText) {

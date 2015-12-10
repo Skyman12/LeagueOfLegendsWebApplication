@@ -1,11 +1,5 @@
 <!DOCTYPE html>
-
-<!--
-  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
-  is governed by a BSD-style license that can be found in the LICENSE file.
--->
-
-<html>
+<html lang="en">
 <head>
     <!-- include the stylesheets -->
     <link rel="stylesheet" href="packages/bootstrap/css/bootstrap.css">
@@ -15,16 +9,11 @@
     <script src="packages/bootstrap/js/bootstrap.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="scaffolded-by" content="https://github.com/google/stagehand">
-    <title>League of Legends Web Application</title>
+    <meta charset="UTF-8">
+    <title>Summoner Lookup</title>
     <link rel="stylesheet" href="styles.css">
-    <script async src="main.dart" type="application/dart"></script>
-    <script async src="packages/browser/dart.js"></script>
+    <script async src="summonerLookup.dart" type="application/dart"></script>
 </head>
-
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -34,12 +23,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">League of Legends Application</a>
+                <a class="navbar-brand" href="index.html">League of Legends Application</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="summonerLookup.html">Summoner Lookup</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active"><a href="summonerLookup.html">Summoner Lookup</a></li>
                     <li><a href="#">Create Lineup</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -55,8 +44,24 @@
         <p>Build your dream team here</p>
     </div>
 
-    <div id="summoner1-container">
-        <table style="width:100%" id="summoner1-table">
+    <div>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">Summoner Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="summonerName" placeholder="Summoner Name" style= "width: 80%">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success" id="submitSummonerData">Get Summoner Data</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="summoner-container">
+        <table style="width:100%" id="summoner-table">
             <tr bgcolor="#FFFF00">
                 <th> </th>
                 <th>Champion </th>
