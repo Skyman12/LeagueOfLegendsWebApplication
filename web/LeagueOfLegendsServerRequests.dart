@@ -12,18 +12,33 @@ class LeagueOfLegendsServerRequests {
   }
 
   static Future<Summoner> buildSummoner(String summonerName) async {
-    var url = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getSummonerData&summonerName=$summonerName";
+    // URL to get the summoner data associated with the summonerName
+    var summonerUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getSummonerData&summonerName=$summonerName";
 
-    // call the web server asynchronously
-    Map summonerData = await HttpRequest.getString(url).then(onDataLoaded);
+    // call the web server
+    Map summonerData = await HttpRequest.getString(summonerUrl).then(onSummonerDataLoaded);
 
     //Build a new Summoner once the data is retrieved
     Summoner s = new Summoner(summonerName, summonerData);
+    var summonerId = s.getId();
+
+    // URL to get the ranked stats data associated with the summoner id
+    var rankedStatsUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getRankedStatsData&summonerId=$summonerId";
+
+    // call the web server
+    Map rankedStatsData = await HttpRequest.getString(rankedStatsUrl).then(onSummonerDataLoaded);
+
+    s.addRankedStatsData(rankedStatsData);
+
     return s;
   }
 
-  // print the raw json response text from the server
-  static Map onDataLoaded(String responseText) {
+  static Map onSummonerDataLoaded(String responseText) {
+    var jsonString = responseText;
+    return JSON.decode(jsonString);
+  }
+
+  static Map onRankedStatsDataLoaded(String responseText) {
     var jsonString = responseText;
     return JSON.decode(jsonString);
   }

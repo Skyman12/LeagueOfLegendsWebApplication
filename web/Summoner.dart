@@ -12,10 +12,30 @@ class Summoner {
     _buildBasicSummonerInformation(summonerData);
   }
 
+  String getName() {
+    return _name;
+  }
+
+  int getId() {
+    return _id;
+  }
+
+  int getProfileIconId() {
+    return _profileIconId;
+  }
+
+  int getSummonerLevel() {
+    return _summonerLevel;
+  }
+
   void _buildBasicSummonerInformation(Map summonerData) {
     _id = summonerData[_name]['id'];
     _profileIconId = summonerData[_name]['profileIconId'];
     _summonerLevel = summonerData[_name]['summonerLevel'];
+  }
+
+  void addRankedStatsData(Map data) {
+    print(data.toString());
   }
 
   String toString() {
@@ -25,4 +45,5 @@ class Summoner {
       "\nProfile Icon Id: " + _profileIconId.toString() +
       "\nSummoner Level: " + _summonerLevel.toString();
   }
+
 }
