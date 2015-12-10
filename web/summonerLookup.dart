@@ -24,8 +24,6 @@ Future getSummonerData(Event e) async {
 
   Summoner summoner = await serverRequests.buildSummoner(inputElement.value);
 
-  print("here");
-
   bool dark = true;
   var element = querySelector('#summoner-table');
   var header = element.children.elementAt(0);
