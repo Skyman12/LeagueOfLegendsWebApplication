@@ -3,10 +3,12 @@ class Champion {
   String name;
   List<String> tags;
   String image;
+  String version;
 
   Champion(String name, Map data) {
     this.name = name;
-    _buildChampion(data);
+    this.version = data['version'];
+    _buildChampion(data['data'][name]);
   }
 
   void _buildChampion(Map data) {
@@ -19,6 +21,7 @@ class Champion {
     return "Id: " + id.toString() +
       "\nName: " + name + "\n" +
       "\nTags: " + tags.toString() + "\n" +
-      "\nImage: " + image + "\n";
+      "\nImage: " + image + "\n" +
+      "\nVersion: " + version + "\n";
   }
 }

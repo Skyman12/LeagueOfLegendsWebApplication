@@ -3,16 +3,17 @@ import 'RankedGameStats.dart';
 
 class ChampionStats {
 
-  Champion _champion;
-  RankedGameStats _stats;
+  Champion champion;
+  RankedGameStats stats;
 
   ChampionStats(Champion champion, RankedGameStats stats) {
-    _champion = champion;
-    _stats = stats;
+    this.champion = champion;
+    this.stats = stats;
   }
 
   String toString() {
-    return "Champion: " + _champion.toString() +
-      "\nStats: " + _stats.toString();
+    return "Champion: " + champion.toString() +
+      "\nStats: " + stats.toString();
   }
+
 }

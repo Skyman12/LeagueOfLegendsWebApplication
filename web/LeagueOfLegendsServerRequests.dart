@@ -43,7 +43,7 @@ class LeagueOfLegendsServerRequests {
     var championUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getChampionData";
 
     // call the web server
-    Map championData = await HttpRequest.getString(championUrl).then(onChampionsLoaded);
+    await HttpRequest.getString(championUrl).then(onChampionsLoaded);
   }
 
   Map onSummonerDataLoaded(String responseText) {
@@ -63,7 +63,7 @@ class LeagueOfLegendsServerRequests {
     championMap = new Map();
 
     for (String key in championNames) {
-      Champion champion = new Champion(key, data['data'][key]);
+      Champion champion = new Champion(key, data);
       championMap[data['data'][key]['id']] = champion;
     }
   }
