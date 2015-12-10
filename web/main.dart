@@ -2,11 +2,15 @@
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:html';
-import 'FantasyFootball.dart';
+import 'dart:async';
+import 'LeagueOfLegendsServerRequests.dart';
+import 'Summoner.dart';
 
-void main() {
+
+Future main() async {
   // listen for the postMessage from the main page
-  FantasyFootball fantasyFootball = new FantasyFootball();
-  fantasyFootball.loadData();
+  LeagueOfLegendsServerRequests lolServerRequests = new LeagueOfLegendsServerRequests();
+  Summoner s = await LeagueOfLegendsServerRequests.buildSummoner("skyman12");
+  print(s.toString());
 }
 
