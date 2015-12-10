@@ -12,9 +12,8 @@
     <meta charset="UTF-8">
     <title>Summoner Lookup</title>
     <link rel="stylesheet" href="styles.css">
-    <script async src="summonerLookup.dart" type="application/dart"></script>
+    <script async src="SummonerLookup.dart" type="application/dart"></script>
 </head>
-<body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -40,24 +39,29 @@
     </nav>
 
     <div class="jumbotron text-center">
-        <h1>League of Legends Team Builder</h1>
-        <p>Build your dream team here</p>
+        <h1>League of Legends Player Search</h1>
+        <p>Know which of your teammates is going to feed before the game even starts</p>
+        <img src="progress.gif" id="progressBar" style="width:32px;height:32px; visibility: hidden" >
     </div>
 
-    <div>
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Summoner Name:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="summonerName" placeholder="Summoner Name" style= "width: 80%">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success" id="submitSummonerData">Get Summoner Data</button>
-                </div>
-            </div>
-        </form>
+    <div id="summoner-information-container">
+
+
+    </div>
+
+    <div id="summoner-data-submit-container" style="text-align: center">
+        <table style="width:100%" id="summoner-submit-table" >
+            <tr>
+                <td>
+                    <input type="text" id="summonerName" placeholder="Summoner Name" style= "width: 80%">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-success" id="submitSummonerData" style="margin: 10px;"><span class="glyphicon glyphicon-search"></span>  Get Summoner Data</button>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div id="summoner-container">

@@ -13,7 +13,9 @@ final String lightColor = "#F5FFFA";
 
 
 Future main() async {
-  LeagueOfLegendsServerRequests serverRequests = new LeagueOfLegendsServerRequests();
+  LeagueOfLegendsServerRequests serverRequests = await new LeagueOfLegendsServerRequests();
+
+  querySelector("#progressBar").style.visibility = "visible";
   Summoner s = await serverRequests.buildSummoner("icastilloa");
 
   bool dark = true;
@@ -26,5 +28,7 @@ Future main() async {
     }
     dark = !dark;
   }
+
+  querySelector("#progressBar").style.visibility = "hidden";
 }
 

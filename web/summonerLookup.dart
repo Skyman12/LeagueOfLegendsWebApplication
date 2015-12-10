@@ -11,18 +11,27 @@ import 'dart:html';
 final String darkColor = "#d3d3d3";
 final String lightColor = "#F5FFFA";
 
-Future main() async {
+void main() {
   var summonerData = querySelector("#submitSummonerData");
   summonerData.onClick.listen(getSummonerData);
 }
 
 Future getSummonerData(Event e) async {
-  LeagueOfLegendsServerRequests serverRequests = await new LeagueOfLegendsServerRequests();
+  LeagueOfLegendsServerRequests serverRequests = new LeagueOfLegendsServerRequests();
   InputElement inputElement = querySelector("#summonerName");
-  Summoner summoner = await serverRequests.buildSummoner("skyman12");
+
+  querySelector("#progressBar").style.visibility = "visible";
+
+  Summoner summoner = await serverRequests.buildSummoner(inputElement.value);
+
+  print("here");
+
   bool dark = true;
   var element = querySelector('#summoner-table');
+  var header = element.children.elementAt(0);
   element.children.clear();
+
+  element.children.add(header);
 
   for (ChampionStats c in summoner.getChampionStats()) {
     if (dark) {
@@ -33,6 +42,7 @@ Future getSummonerData(Event e) async {
     dark = !dark;
   }
 
-  return;
+  querySelector("#progressBar").style.visibility = "hidden";
+  inputElement.value = "";
 }
 
