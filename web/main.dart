@@ -8,23 +8,23 @@ import 'ChampionStats.dart';
 import 'Summoner.dart';
 import 'dart:html';
 
+final String darkColor = "#d3d3d3";
+final String lightColor = "#F5FFFA";
+
 
 Future main() async {
   LeagueOfLegendsServerRequests serverRequests = new LeagueOfLegendsServerRequests();
-  Summoner s = await serverRequests.buildSummoner("cotton85");
-  print(s.toString());
-  print(s.getChampionStats().toString());
+  Summoner s = await serverRequests.buildSummoner("icastilloa");
 
+  bool dark = true;
   for (ChampionStats c in s.getChampionStats()) {
-    var element = querySelector('#summoner1-container');
-    DivElement component = new DivElement();
-    var image = c.champion.image;
-    var version = c.champion.version;
-    component.append(new ImageElement(src: "http://ddragon.leagueoflegends.com/cdn/$version/img/champion/$image", width : 64, height : 64));
-    LabelElement label = new LabelElement();
-    label.text = c.toString();
-    component.append(label);
-    element.children.add(component);
+    var element = querySelector('#summoner1-table');
+    if (dark) {
+      element.children.add(ChampionDisplayComponent.buildComponent(c, darkColor));
+    } else {
+      element.children.add(ChampionDisplayComponent.buildComponent(c, lightColor));
+    }
+    dark = !dark;
   }
 }
 

@@ -7,15 +7,23 @@ class RankedGameStats {
     int totalAssists;
     int totalMinionKills;
     int totalDeaths;
+    double averageChampionKills;
+    double averageAssists;
+    double averageDeaths;
+    double averageMinionKills;
 
     RankedGameStats(Map data) {
       wins = data['totalSessionsWon'];
       losses = data['totalSessionsLost'];
       totalGamesPlayed = data['totalSessionsPlayed'];
       totalChampionKills = data['totalChampionKills'];
+      averageChampionKills = totalChampionKills / totalGamesPlayed;
       totalAssists = data['totalAssists'];
+      averageAssists = totalAssists / totalGamesPlayed;
       totalMinionKills = data['totalMinionKills'];
+      averageMinionKills = totalMinionKills / totalGamesPlayed;
       totalDeaths = data['totalDeathsPerSession'];
+      averageDeaths = totalDeaths / totalGamesPlayed;
     }
 
     String toString() {
