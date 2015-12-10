@@ -10,7 +10,7 @@ class FantasyFootball {
   }
 
   void loadData() {
-    var url = "http://127.0.0.1:8081/simpleserver.php?action=CreatePost";
+    var url = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=CreatePost";
 
     // call the web server asynchronously
     var request = HttpRequest.getString(url).then(onDataLoaded);
