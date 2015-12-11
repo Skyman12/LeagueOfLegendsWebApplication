@@ -39,13 +39,13 @@ Future getSummonerData(Event e) async {
   element.children.clear();
   element.children.add(summonerDiv);
 
-  updateChampionDisplay(summoner.getChampionStats());
+  updateChampionDisplayWithSort();
 
   querySelector("#progressBar").style.visibility = "hidden";
   inputElement.value = "";
 }
 
-void updateChampionDisplayWithSort(Event e) {
+void updateChampionDisplayWithSort([Event e]) {
   List data = summoner.getChampionStats();
   SelectElement selection = querySelector("#sortingType");
   SelectElement order = querySelector("#sortingOrder");
