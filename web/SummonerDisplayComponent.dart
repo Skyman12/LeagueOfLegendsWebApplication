@@ -13,13 +13,17 @@ class SummonerDisplayComponent {
       return div;
   }
 
-  static TableRowElement buildPlayerRoleComponent(Summoner s) {
+  static TableRowElement buildPlayerRoleComponent(Summoner s, String role) {
     TableRowElement tableRow = new TableRowElement();
     tableRow.style.backgroundColor = "#FF0000";
 
     TableCellElement summonerName = tableRow.insertCell(0);
     summonerName.text = s.getName();
     summonerName.style.textAlign = "center";
+
+    TableCellElement summonerRole = tableRow.insertCell(1);
+    summonerRole.text = role;
+    summonerRole.style.textAlign = "center";
 
     return tableRow;
   }
