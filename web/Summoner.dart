@@ -9,6 +9,8 @@ class Summoner {
   int _profileIconId;
   int _summonerLevel;
   List<ChampionStats> _championStats;
+  String tier;
+  String division;
 
 
   Summoner(String summonerName, Map summonerData) {
@@ -52,6 +54,12 @@ class Summoner {
           _championStats.add(new ChampionStats(champion, stats));
         }
     }
+  }
+
+
+  void addRank(Map data) {
+    tier = data[_id.toString()][0]['tier'];
+    division = data[_id.toString()][0]['entries'][0]['division'];
   }
 
   String toString() {

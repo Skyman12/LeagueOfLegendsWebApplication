@@ -8,7 +8,6 @@
     <!-- include the javascript -->
     <script src="packages/bootstrap/js/bootstrap.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-S
     <meta charset="UTF-8">
     <title>Summoner Lookup</title>
     <link rel="stylesheet" href="styles.css">
@@ -43,12 +42,6 @@ S
         <p>Know which of your teammates is going to feed before the game even starts</p>
         <img src="progress.gif" id="progressBar" style="width:32px;height:32px; visibility: hidden" >
     </div>
-
-    <div id="summoner-information-container">
-
-
-    </div>
-
     <div id="summoner-data-submit-container" style="text-align: center">
         <table style="width:100%" id="summoner-submit-table" >
             <tr>
@@ -64,12 +57,41 @@ S
         </table>
     </div>
 
+    <div id= "summoner-information-container">
+    </div>
+
+    <div style="text-align: center">
+        <table style="width:100%" id="sorting-table" >
+            <tr>
+                <td>
+                    Sort by:
+                    <select id="sortingType">
+                        <option>Champion</option>
+                        <option>Games Played</option>
+                        <option>Win Percentage</option>
+                        <option>Wins</option>
+                        <option>Losses</option>
+                        <option>Average Kills</option>
+                        <option>Average Deaths</option>
+                        <option>Average Assists</option>
+                        <option>Average Farm</option>
+                    </select>
+                    Order:
+                    <select id="sortingOrder">
+                        <option>Lowest</option>
+                        <option>Highest</option>
+                    </select>
+                </td>
+        </table>
+    </div>
+
     <div id="summoner-container">
         <table style="width:100%" id="summoner-table">
             <tr bgcolor="#FFFF00">
                 <th> </th>
                 <th>Champion </th>
                 <th style="text-align: center">Total Games</th>
+                <th style="text-align: center">Win Percentage</th>
                 <th style="text-align: center">Wins</th>
                 <th style="text-align: center">Losses</th>
                 <th style="text-align: center">Average Kills</th>

@@ -1,4 +1,3 @@
-import "Champion.dart";
 import 'ChampionStats.dart';
 import "dart:html";
 
@@ -21,27 +20,31 @@ class ChampionDisplayComponent {
     championTotalGames.text = c.stats.totalGamesPlayed.toString();
     championTotalGames.style.textAlign = "center";
 
-    TableCellElement championWins = tableRow.insertCell(3);
+    TableCellElement championWinPercentage = tableRow.insertCell(3);
+    championWinPercentage.text = (c.stats.winPercentage * 100).toStringAsFixed(2) + "%";
+    championWinPercentage.style.textAlign = "center";
+
+    TableCellElement championWins = tableRow.insertCell(4);
     championWins.text = c.stats.wins.toString();
     championWins.style.textAlign = "center";
 
-    TableCellElement championLosses = tableRow.insertCell(4);
+    TableCellElement championLosses = tableRow.insertCell(5);
     championLosses.text = c.stats.losses.toString();
     championLosses.style.textAlign = "center";
 
-    TableCellElement averageKills = tableRow.insertCell(5);
+    TableCellElement averageKills = tableRow.insertCell(6);
     averageKills.text = c.stats.averageChampionKills.toStringAsFixed(2);
     averageKills.style.textAlign = "center";
 
-    TableCellElement averageDeaths = tableRow.insertCell(6);
+    TableCellElement averageDeaths = tableRow.insertCell(7);
     averageDeaths.text = c.stats.averageDeaths.toStringAsFixed(2);
     averageDeaths.style.textAlign = "center";
 
-    TableCellElement averageAssists = tableRow.insertCell(7);
+    TableCellElement averageAssists = tableRow.insertCell(8);
     averageAssists.text = c.stats.averageAssists.toStringAsFixed(2);
     averageAssists.style.textAlign = "center";
 
-    TableCellElement averageFarm = tableRow.insertCell(8);
+    TableCellElement averageFarm = tableRow.insertCell(9);
     averageFarm.text = c.stats.averageMinionKills.toStringAsFixed(2);
     averageFarm.style.textAlign = "center";
 

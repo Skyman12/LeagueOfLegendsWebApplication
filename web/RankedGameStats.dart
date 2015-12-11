@@ -3,6 +3,7 @@ class RankedGameStats {
     int wins;
     int losses;
     int totalGamesPlayed;
+    double winPercentage;
     int totalChampionKills;
     int totalAssists;
     int totalMinionKills;
@@ -16,6 +17,7 @@ class RankedGameStats {
       wins = data['totalSessionsWon'];
       losses = data['totalSessionsLost'];
       totalGamesPlayed = data['totalSessionsPlayed'];
+      winPercentage = wins / totalGamesPlayed;
       totalChampionKills = data['totalChampionKills'];
       averageChampionKills = totalChampionKills / totalGamesPlayed;
       totalAssists = data['totalAssists'];

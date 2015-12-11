@@ -27,6 +27,14 @@ class LeagueOfLegendsServerRequests {
     Summoner s = new Summoner(summonerName, summonerData);
     var summonerId = s.getId();
 
+    // Get the Summoners rank
+    var summonerRankUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getSummonerRank&summonerId=$summonerId";
+
+    // call the web server
+    Map summonerRank = await HttpRequest.getString(summonerRankUrl).then(onSummonerRankLoaded);
+
+    s.addRank(summonerRank);
+
     // URL to get the ranked stats data associated with the summoner id
     var rankedStatsUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getRankedStatsData&summonerId=$summonerId";
 
@@ -47,6 +55,11 @@ class LeagueOfLegendsServerRequests {
   }
 
   Map onSummonerDataLoaded(String responseText) {
+    var jsonString = responseText;
+    return JSON.decode(jsonString);
+  }
+
+  Map onSummonerRankLoaded(String responseText) {
     var jsonString = responseText;
     return JSON.decode(jsonString);
   }
