@@ -9,9 +9,9 @@
     <script src="packages/bootstrap/js/bootstrap.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <meta charset="UTF-8">
-    <title>Summoner Lookup</title>
+    <title>Create Lineup</title>
     <link rel="stylesheet" href="styles.css">
-    <script async src="summonerLookup.dart" type="application/dart"></script>
+    <script async src="createLineup.dart" type="application/dart"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse">
@@ -27,23 +27,43 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                     <li><a href="index.html">Home</a></li>
-                    <li class="active"><a href="SummonerLookup.html">Summoner Lookup</a></li>
-                    <li><a href="CreateLineup.html">Create Lineup</a></li>
+                    <li><a href="SummonerLookup.html">Summoner Lookup</a></li>
+                    <li class="active"><a href="CreateLineup.html">Create Lineup</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="jumbotron text-center">
-        <h1>League of Legends Player Search</h1>
-        <p>Know which of your teammates is going to feed before the game even starts</p>
+        <h1>League of Legends Lineup Architect</h1>
+        <p>Build a team to take you from Cardboard IV to Gold II</p>
         <img src="progress.gif" id="progressBar" style="width:32px;height:32px; visibility: hidden" >
     </div>
     <div id="summoner-data-submit-container" style="text-align: center">
         <table style="width:100%" id="summoner-submit-table" >
             <tr>
                 <td>
-                    <input type="text" id="summonerName" placeholder="Summoner Name" style= "width: 80%">
+                    <input type="text" id="summonerName1" placeholder="Your Summoner Name" style= "width: 80%; margin: 5px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="summonerName2" placeholder="Summoner Name 2" style= "width: 80%; margin: 5px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="summonerName3" placeholder="Summoner Name 3" style= "width: 80%; margin: 5px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="summonerName4" placeholder="Summoner Name 4" style= "width: 80%; margin: 5px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="summonerName5" placeholder="Summoner Name 5" style= "width: 80%; margin: 5px;">
                 </td>
             </tr>
             <tr>
@@ -56,37 +76,6 @@
 
     <div id= "summoner-information-container">
     </div>
-
-    <div style="text-align: center">
-        <table style="width:100%" id="sorting-table" >
-            <tr>
-                <td>
-                    Sort by:
-                    <select id="sortingType">
-                        <option>Champion</option>
-                        <option>Games Played</option>
-                        <option>Win Percentage</option>
-                        <option>Wins</option>
-                        <option>Losses</option>
-                        <option>Average Kills</option>
-                        <option>Average Deaths</option>
-                        <option>Average Assists</option>
-                        <option>Average Farm</option>
-                        <option>Mid Score</option>
-                        <option>Top Score</option>
-                        <option>Adc Score</option>
-                        <option>Support Score</option>
-                        <option>Jungle Score</option>
-                    </select>
-                    Order:
-                    <select id="sortingOrder">
-                        <option>Lowest</option>
-                        <option>Highest</option>
-                    </select>
-                </td>
-        </table>
-    </div>
-
     <div id="summoner-container">
         <table style="width:100%" id="summoner-table">
             <tr bgcolor="#FFFF00">

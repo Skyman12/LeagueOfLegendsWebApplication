@@ -52,7 +52,6 @@ class Summoner {
         if (rankedData['id'] != 0) {
           Champion champion = championMap[rankedData['id']];
           champion.roles = championRoles[championMap[rankedData['id']].name];
-          print(champion.name);
           RankedGameStats stats = new RankedGameStats(rankedData['stats']);
           _championStats.add(new ChampionStats(champion, stats));
         }

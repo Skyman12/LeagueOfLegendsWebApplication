@@ -12,4 +12,15 @@ class SummonerDisplayComponent {
       div.innerHtml = "<h1> $displayString </h1>";
       return div;
   }
+
+  static TableRowElement buildPlayerRoleComponent(Summoner s) {
+    TableRowElement tableRow = new TableRowElement();
+    tableRow.style.backgroundColor = "#FF0000";
+
+    TableCellElement summonerName = tableRow.insertCell(0);
+    summonerName.text = s.getName();
+    summonerName.style.textAlign = "center";
+
+    return tableRow;
+  }
 }

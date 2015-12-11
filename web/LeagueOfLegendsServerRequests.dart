@@ -7,10 +7,14 @@ import 'Champion.dart';
 class LeagueOfLegendsServerRequests {
   Map<int, Champion> championMap;
   Map<String, List<String>> championRoles;
+  Map summonerData;
+  Map summonerRank;
+  Map rankedStatsData;
+
   var host = "127.0.0.1:8081";
 
   LeagueOfLegendsServerRequests() {
-     _getStaticChampionInformation();
+    _getStaticChampionInformation();
     _addToChampionRoles();
   }
 
@@ -24,7 +28,7 @@ class LeagueOfLegendsServerRequests {
     var summonerUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getSummonerData&summonerName=$summonerName";
 
     // call the web server
-    Map summonerData = await HttpRequest.getString(summonerUrl).then(onSummonerDataLoaded);
+    await HttpRequest.getString(summonerUrl).then(onSummonerDataLoaded).then(_assignSummonerData);
 
     //Build a new Summoner once the data is retrieved
     Summoner s = new Summoner(summonerName, summonerData);
@@ -34,19 +38,19 @@ class LeagueOfLegendsServerRequests {
     var summonerRankUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getSummonerRank&summonerId=$summonerId";
 
     // call the web server
-    Map summonerRank = await HttpRequest.getString(summonerRankUrl).then(onSummonerRankLoaded);
+    await HttpRequest.getString(summonerRankUrl).then(onSummonerRankLoaded).then(_assignSummonerRank);
 
-    s.addRank(summonerRank);
+    await s.addRank(summonerRank);
 
     // URL to get the ranked stats data associated with the summoner id
     var rankedStatsUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getRankedStatsData&summonerId=$summonerId";
 
     // call the web server
-    Map rankedStatsData = await HttpRequest.getString(rankedStatsUrl).then(onSummonerDataLoaded);
+    await HttpRequest.getString(rankedStatsUrl).then(onSummonerDataLoaded).then(_assignRankedStatsData);
 
-    s.addRankedStatsData(rankedStatsData, championMap, championRoles);
+    await s.addRankedStatsData(rankedStatsData, championMap, championRoles);
 
-    return s;
+    return await s;
   }
 
   Future _getStaticChampionInformation() async {
@@ -63,6 +67,18 @@ class LeagueOfLegendsServerRequests {
 
     // call the web server
     await HttpRequest.getString(championUrl).then(onChampionRolesLoaded);
+  }
+
+  void _assignSummonerData(Map data) {
+    summonerData = data;
+  }
+
+  void _assignSummonerRank(Map data) {
+    summonerRank = data;
+  }
+
+  void _assignRankedStatsData(Map data) {
+    rankedStatsData = data;
   }
 
   Map onSummonerDataLoaded(String responseText) {

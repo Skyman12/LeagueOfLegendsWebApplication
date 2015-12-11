@@ -1,4 +1,5 @@
 import 'ChampionStats.dart';
+import 'Summoner.dart';
 import "dart:html";
 
 class ChampionDisplayComponent {
