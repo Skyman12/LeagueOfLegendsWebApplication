@@ -1,19 +1,22 @@
 class Champion {
   int id;
   String name;
+  String key;
   List<String> tags;
+  List<String> roles;
   String image;
   String version;
 
-  Champion(String name, Map data) {
-    this.name = name;
+  Champion(String key, Map data) {
+    this.key = key;
     this.version = data['version'];
-    _buildChampion(data['data'][name]);
+    _buildChampion(data['data'][key]);
   }
 
   void _buildChampion(Map data) {
     tags = data['tags'];
     id = data['id'];
+    name = data['name'];
     image = data['image']['full'];
   }
 

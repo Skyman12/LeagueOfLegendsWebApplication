@@ -48,6 +48,26 @@ class ChampionDisplayComponent {
     averageFarm.text = c.stats.averageMinionKills.toStringAsFixed(2);
     averageFarm.style.textAlign = "center";
 
+    TableCellElement midScore = tableRow.insertCell(10);
+    midScore.text = c.midScore.toStringAsFixed(2);
+    midScore.style.textAlign = "center";
+
+    TableCellElement topScore = tableRow.insertCell(11);
+    topScore.text = c.topScore.toStringAsFixed(2);
+    topScore.style.textAlign = "center";
+
+    TableCellElement adcScore = tableRow.insertCell(12);
+    adcScore.text = c.adcScore.toStringAsFixed(2);
+    adcScore.style.textAlign = "center";
+
+    TableCellElement supportScore = tableRow.insertCell(13);
+    supportScore.text = c.supportScore.toStringAsFixed(2);
+    supportScore.style.textAlign = "center";
+
+    TableCellElement jungleScore = tableRow.insertCell(14);
+    jungleScore.text = c.jungleScore.toStringAsFixed(2);
+    jungleScore.style.textAlign = "center";
+
     return tableRow;
   }
 }

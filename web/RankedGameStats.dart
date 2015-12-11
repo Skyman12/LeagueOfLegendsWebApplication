@@ -30,11 +30,11 @@ class RankedGameStats {
 
     String toString() {
       return "Wins: " + wins.toString() +
-        "\nLosses: " + losses.toString() +
-        "\nTotal Games: " + totalGamesPlayed.toString() +
-        "\nTotal Champion Kills: " + totalChampionKills.toString() +
-        "\ntotal Assists: " + totalAssists.toString() +
-        "\nTotal Minion Kills: " + totalMinionKills.toString() +
-        "\nTotal Deaths: " + totalDeaths.toString() + "\n";
+      "\nLosses: " + losses.toString() +
+      "\nTotal Games: " + totalGamesPlayed.toString() +
+      "\nTotal Champion Kills: " + totalChampionKills.toString() +
+      "\ntotal Assists: " + totalAssists.toString() +
+      "\nTotal Minion Kills: " + totalMinionKills.toString() +
+      "\nTotal Deaths: " + totalDeaths.toString() + "\n";
     }
 }

@@ -44,18 +44,20 @@ class Summoner {
     _summonerLevel = summonerData[_name]['summonerLevel'];
   }
 
-  void addRankedStatsData(Map data, Map<int, Champion> championMap) {
+  void addRankedStatsData(Map data, Map<int, Champion> championMap, Map<String, List<String>> championRoles) {
     _championStats = new List();
     for (Map rankedData in data['champions']) {
+
         // Dont want to get 0 -- that is the data for all champions
         if (rankedData['id'] != 0) {
           Champion champion = championMap[rankedData['id']];
+          champion.roles = championRoles[championMap[rankedData['id']].name];
+          print(champion.name);
           RankedGameStats stats = new RankedGameStats(rankedData['stats']);
           _championStats.add(new ChampionStats(champion, stats));
         }
     }
   }
-
 
   void addRank(Map data) {
     tier = data[_id.toString()][0]['tier'];

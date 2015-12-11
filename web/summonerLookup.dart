@@ -123,6 +123,46 @@ void updateChampionDisplayWithSort([Event e]) {
       }
 
       break;
+    case "Adc Score" :
+      if (highest) {
+        data.sort((a, b) => _getAdcScore(b).compareTo(_getAdcScore(a)));
+      } else {
+        data.sort((a, b) => _getAdcScore(a).compareTo(_getAdcScore(b)));
+      }
+
+      break;
+    case "Mid Score" :
+      if (highest) {
+        data.sort((a, b) => _getMidScore(b).compareTo(_getMidScore(a)));
+      } else {
+        data.sort((a, b) => _getMidScore(a).compareTo(_getMidScore(b)));
+      }
+
+      break;
+    case "Top Score" :
+      if (highest) {
+        data.sort((a, b) => _getTopScore(b).compareTo(_getTopScore(a)));
+      } else {
+        data.sort((a, b) => _getTopScore(a).compareTo(_getTopScore(b)));
+      }
+
+      break;
+    case "Support Score" :
+      if (highest) {
+        data.sort((a, b) => _getSupportScore(b).compareTo(_getSupportScore(a)));
+      } else {
+        data.sort((a, b) => _getSupportScore(a).compareTo(_getSupportScore(b)));
+      }
+
+      break;
+    case "Jungle Score" :
+      if (highest) {
+        data.sort((a, b) => _getJungleScore(b).compareTo(_getJungleScore(a)));
+      } else {
+        data.sort((a, b) => _getJungleScore(a).compareTo(_getJungleScore(b)));
+      }
+
+      break;
     }
 
   updateChampionDisplay(data);
@@ -162,6 +202,26 @@ int _getWins(ChampionStats cs) {
 
 int _getLosses(ChampionStats cs) {
   return cs.stats.losses;
+}
+
+double _getAdcScore(ChampionStats cs) {
+  return cs.adcScore;
+}
+
+double _getMidScore(ChampionStats cs) {
+  return cs.midScore;
+}
+
+double _getTopScore(ChampionStats cs) {
+  return cs.topScore;
+}
+
+double _getSupportScore(ChampionStats cs) {
+  return cs.supportScore;
+}
+
+double _getJungleScore(ChampionStats cs) {
+  return cs.jungleScore;
 }
 
 void updateChampionDisplay(List<ChampionStats> data) {

@@ -6,15 +6,18 @@ import 'Champion.dart';
 
 class LeagueOfLegendsServerRequests {
   Map<int, Champion> championMap;
+  Map<String, List<String>> championRoles;
   var host = "127.0.0.1:8081";
 
   LeagueOfLegendsServerRequests() {
-    _getStaticChampionInformation();
+     _getStaticChampionInformation();
+    _addToChampionRoles();
   }
 
   Future<Summoner> buildSummoner(String summonerName) async {
     if (championMap == null) {
       await _getStaticChampionInformation();
+      await _addToChampionRoles();
     }
 
     // URL to get the summoner data associated with the summonerName
@@ -41,7 +44,7 @@ class LeagueOfLegendsServerRequests {
     // call the web server
     Map rankedStatsData = await HttpRequest.getString(rankedStatsUrl).then(onSummonerDataLoaded);
 
-    s.addRankedStatsData(rankedStatsData, championMap);
+    s.addRankedStatsData(rankedStatsData, championMap, championRoles);
 
     return s;
   }
@@ -52,6 +55,14 @@ class LeagueOfLegendsServerRequests {
 
     // call the web server
     await HttpRequest.getString(championUrl).then(onChampionsLoaded);
+  }
+
+  Future _addToChampionRoles() async {
+    // URL to get the champion data
+    var championUrl = "http://$host/LeagueOfLegendsServer/simpleserver.php?action=getChampionRoles";
+
+    // call the web server
+    await HttpRequest.getString(championUrl).then(onChampionRolesLoaded);
   }
 
   Map onSummonerDataLoaded(String responseText) {
@@ -79,5 +90,10 @@ class LeagueOfLegendsServerRequests {
       Champion champion = new Champion(key, data);
       championMap[data['data'][key]['id']] = champion;
     }
+  }
+
+  void onChampionRolesLoaded(String responseText) {
+    var jsonString = responseText;
+    championRoles = JSON.decode(jsonString);
   }
 }
