@@ -38,6 +38,16 @@ class Summoner {
     return _championStats;
   }
 
+  ChampionStats getSpecificChampionStats(String champion) {
+    for (ChampionStats cs in _championStats) {
+      if (cs.champion.name == champion) {
+        return cs;
+      }
+    }
+
+    return null; // This is bad
+  }
+
   void _buildBasicSummonerInformation(Map summonerData) {
     _id = summonerData[_name]['id'];
     _profileIconId = summonerData[_name]['profileIconId'];

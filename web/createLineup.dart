@@ -8,6 +8,7 @@ import 'SummonerWithChampion.dart';
 import 'ChampionDisplayComponent.dart';
 import 'ChampionStats.dart';
 import 'Summoner.dart';
+import 'Lineup.dart';
 import 'dart:html';
 
 final String darkColor = "#d3d3d3";
@@ -18,6 +19,12 @@ Summoner summoner2;
 Summoner summoner3;
 Summoner summoner4;
 Summoner summoner5;
+
+SummonerWithChampion topSelection;
+SummonerWithChampion midSelection;
+SummonerWithChampion jungleSelection;
+SummonerWithChampion adcSelection;
+SummonerWithChampion supportSelection;
 
 void main() {
   var summonerData = querySelector("#submitSummonerData");
@@ -33,6 +40,18 @@ Future getSummonerData(Event e) async {
   InputElement inputElement4 = querySelector("#summonerName4");
   InputElement inputElement5 = querySelector("#summonerName5");
 
+  InputElement champion1Element = querySelector("#championName1");
+  InputElement champion2Element = querySelector("#championName2");
+  InputElement champion3Element = querySelector("#championName3");
+  InputElement champion4Element = querySelector("#championName4");
+  InputElement champion5Element = querySelector("#championName5");
+
+  SelectElement role1Element = querySelector("#role1");
+  SelectElement role2Element = querySelector("#role2");
+  SelectElement role3Element = querySelector("#role3");
+  SelectElement role4Element = querySelector("#role4");
+  SelectElement role5Element = querySelector("#role5");
+
   querySelector("#progressBar").style.visibility = "visible";
 
   summoner1 = await serverRequests.buildSummoner(inputElement1.value);
@@ -45,7 +64,13 @@ Future getSummonerData(Event e) async {
   await sleep5();
   summoner5 = await serverRequests.buildSummoner(inputElement5.value);
 
-  generateSummonerPositionsSimple(summoner1, summoner2, summoner3, summoner4, summoner5);
+  getPresetSelections(summoner1, champion1Element, role1Element);
+  getPresetSelections(summoner2, champion2Element, role2Element);
+  getPresetSelections(summoner3, champion3Element, role3Element);
+  getPresetSelections(summoner4, champion4Element, role4Element);
+  getPresetSelections(summoner5, champion5Element, role5Element);
+
+  generateSummonerPositions(summoner1, summoner2, summoner3, summoner4, summoner5);
 
   querySelector("#progressBar").style.visibility = "hidden";
   inputElement1.value = "";
@@ -55,80 +80,171 @@ Future getSummonerData(Event e) async {
   inputElement5.value = "";
 }
 
+void getPresetSelections(Summoner s, InputElement nameElement, SelectElement roleElement) {
+  if (nameElement.value.trim() != "") {
+    ChampionStats champion = s.getSpecificChampionStats(nameElement.value);
+    switch (roleElement.value) {
+      case "Top":
+        topSelection = new SummonerWithChampion(s, champion);
+        break;
+      case "Mid":
+        midSelection = new SummonerWithChampion(s, champion);
+        break;
+      case "Jungle":
+        jungleSelection = new SummonerWithChampion(s, champion);
+        break;
+      case "Adc":
+        adcSelection = new SummonerWithChampion(s, champion);
+        break;
+      case "Support":
+        supportSelection = new SummonerWithChampion(s, champion);
+        break;
+    }
+  }
+}
+
 Future sleep5() {
   return new Future.delayed(const Duration(seconds: 5), () => "5");
 }
 
-List<TableRowElement> generateSummonerPositions(Summoner s1, Summoner s2, Summoner s3, Summoner s4, Summoner s5) {
+void generateSummonerPositions(Summoner s1, Summoner s2, Summoner s3, Summoner s4, Summoner s5) {
 
-}
-
-void generateSummonerPositionsSimple(Summoner s1, Summoner s2, Summoner s3, Summoner s4, Summoner s5) {
   List<SummonerWithChampion> bestTop = new List();
   List<SummonerWithChampion> bestMid = new List();
   List<SummonerWithChampion> bestAdc = new List();
   List<SummonerWithChampion> bestJungle = new List();
   List<SummonerWithChampion> bestSupport = new List();
 
-  bestTop.add(new SummonerWithChampion(s1, getBestTopScore(s1)));
-  bestTop.add(new SummonerWithChampion(s2, getBestTopScore(s2)));
-  bestTop.add(new SummonerWithChampion(s3, getBestTopScore(s3)));
-  bestTop.add(new SummonerWithChampion(s4, getBestTopScore(s4)));
-  bestTop.add(new SummonerWithChampion(s5, getBestTopScore(s5)));
-  sort("Top", bestTop);
+  addToList(5, s1.getChampionStats(), bestTop, "Top", s1);
+  addToList(5, s1.getChampionStats(), bestMid, "Mid", s1);
+  addToList(5, s1.getChampionStats(), bestJungle, "Jungle", s1);
+  addToList(5, s1.getChampionStats(), bestSupport, "Support", s1);
+  addToList(5, s1.getChampionStats(), bestAdc, "Adc", s1);
 
-  bestMid.add(new SummonerWithChampion(s1, getBestMidScore(s1)));
-  bestMid.add(new SummonerWithChampion(s2, getBestMidScore(s2)));
-  bestMid.add(new SummonerWithChampion(s3, getBestMidScore(s3)));
-  bestMid.add(new SummonerWithChampion(s4, getBestMidScore(s4)));
-  bestMid.add(new SummonerWithChampion(s5, getBestMidScore(s5)));
-  sort("Mid", bestMid);
+  addToList(5, s2.getChampionStats(), bestTop, "Top", s2);
+  addToList(5, s2.getChampionStats(), bestMid, "Mid", s2);
+  addToList(5, s2.getChampionStats(), bestJungle, "Jungle", s2);
+  addToList(5, s2.getChampionStats(), bestSupport, "Support", s2);
+  addToList(5, s2.getChampionStats(), bestAdc, "Adc", s2);
 
-  bestAdc.add(new SummonerWithChampion(s1, getBestAdcScore(s1)));
-  bestAdc.add(new SummonerWithChampion(s2, getBestAdcScore(s2)));
-  bestAdc.add(new SummonerWithChampion(s3, getBestAdcScore(s3)));
-  bestAdc.add(new SummonerWithChampion(s4, getBestAdcScore(s4)));
-  bestAdc.add(new SummonerWithChampion(s5, getBestAdcScore(s5)));
-  sort("Adc", bestAdc);
+  addToList(5, s3.getChampionStats(), bestTop, "Top", s3);
+  addToList(5, s3.getChampionStats(), bestMid, "Mid", s3);
+  addToList(5, s3.getChampionStats(), bestJungle, "Jungle", s3);
+  addToList(5, s3.getChampionStats(), bestSupport, "Support", s3);
+  addToList(5, s3.getChampionStats(), bestAdc, "Adc", s3);
 
-  bestJungle.add(new SummonerWithChampion(s1, getBestJungleScore(s1)));
-  bestJungle.add(new SummonerWithChampion(s2, getBestJungleScore(s2)));
-  bestJungle.add(new SummonerWithChampion(s3, getBestJungleScore(s3)));
-  bestJungle.add(new SummonerWithChampion(s4, getBestJungleScore(s4)));
-  bestJungle.add(new SummonerWithChampion(s5, getBestJungleScore(s5)));
-  sort("Jungle", bestJungle);
+  addToList(5, s4.getChampionStats(), bestTop, "Top", s4);
+  addToList(5, s4.getChampionStats(), bestMid, "Mid", s4);
+  addToList(5, s4.getChampionStats(), bestJungle, "Jungle", s4);
+  addToList(5, s4.getChampionStats(), bestSupport, "Support", s4);
+  addToList(5, s4.getChampionStats(), bestAdc, "Adc", s4);
 
-  bestSupport.add(new SummonerWithChampion(s1, getBestSupportScore(s1)));
-  bestSupport.add(new SummonerWithChampion(s2, getBestSupportScore(s2)));
-  bestSupport.add(new SummonerWithChampion(s3, getBestSupportScore(s3)));
-  bestSupport.add(new SummonerWithChampion(s4, getBestSupportScore(s4)));
-  bestSupport.add(new SummonerWithChampion(s5, getBestSupportScore(s5)));
-  sort("Support", bestSupport);
+  addToList(5, s5.getChampionStats(), bestTop, "Top", s5);
+  addToList(5, s5.getChampionStats(), bestMid, "Mid", s5);
+  addToList(5, s5.getChampionStats(), bestJungle, "Jungle", s5);
+  addToList(5, s5.getChampionStats(), bestSupport, "Support", s5);
+  addToList(5, s5.getChampionStats(), bestAdc, "Adc", s5);
 
-  SummonerWithChampion top = bestTop.elementAt(0);
+  if (topSelection != null) {
+    bestTop.clear();
+    bestTop.add(topSelection);
+  }
 
-  TableRowElement topRow = SummonerDisplayComponent.buildPlayerRoleComponent(top.summoner, "Top");
-  TableRowElement topSummonerRow = ChampionDisplayComponent.buildComponent(top.stats, "#FFFFFF");
+  if (midSelection != null) {
+    bestMid.clear();
+    bestMid.add(midSelection);
+  }
 
-  SummonerWithChampion mid = bestMid.elementAt(0);
+  if (jungleSelection != null) {
+    bestJungle.clear();
+    bestJungle.add(jungleSelection);
+  }
 
-  TableRowElement midRow = SummonerDisplayComponent.buildPlayerRoleComponent(mid.summoner, "Mid");
-  TableRowElement midSummonerRow = ChampionDisplayComponent.buildComponent(mid.stats, "#FFFFFF");
+  if (adcSelection != null) {
+    bestAdc.clear();
+    bestAdc.add(adcSelection);
+  }
 
-  SummonerWithChampion adc = bestAdc.elementAt(0);
+  if (supportSelection != null) {
+    bestSupport.clear();
+    bestSupport.add(supportSelection);
+  }
 
-  TableRowElement adcRow = SummonerDisplayComponent.buildPlayerRoleComponent(adc.summoner, "Adc");
-  TableRowElement adcSummonerRow = ChampionDisplayComponent.buildComponent(adc.stats, "#FFFFFF");
+  Lineup bestLineup = generateBestLineup(bestTop, bestMid, bestJungle, bestAdc, bestSupport);
 
-  SummonerWithChampion jungle = bestJungle.elementAt(0);
+  displayLineup(bestLineup);
+}
 
-  TableRowElement jungleRow = SummonerDisplayComponent.buildPlayerRoleComponent(jungle.summoner, "Jungle");
-  TableRowElement jungleSummonerRow = ChampionDisplayComponent.buildComponent(jungle.stats, "#FFFFFF");
+Lineup generateBestLineup(List<SummonerWithChampion> top, List<SummonerWithChampion> mid, List<SummonerWithChampion> jungle, List<SummonerWithChampion> adc, List<SummonerWithChampion> support) {
+  Lineup lineup;
+  double score = 0.0;
+    for (SummonerWithChampion t in top) {
+      for (SummonerWithChampion m in mid) {
+        for (SummonerWithChampion j in jungle) {
+          for (SummonerWithChampion a in adc) {
+            for (SummonerWithChampion s in support) {
+                if (checkForUniqueSummoner(t.summoner,m.summoner,j.summoner,a.summoner,s.summoner) && checkForUniqueChampions(t.stats,m.stats,j.stats,a.stats,s.stats)) {
+                  Lineup temp = new Lineup(t,m,j,a,s);
+                  if (temp.getScore() > score && temp.hasMage() && temp.hasTank()) {
+                    lineup = new Lineup(t, m, j, a, s);
+                    score = lineup.getScore();
+                  }
+                }
+            }
+          }
+        }
+      }
+    }
 
-  SummonerWithChampion support = bestSupport.elementAt(0);
+  return lineup;
+}
 
-  TableRowElement supportRow = SummonerDisplayComponent.buildPlayerRoleComponent(support.summoner, "Support");
-  TableRowElement supportSummonerRow = ChampionDisplayComponent.buildComponent(support.stats, "#FFFFFF");
+void addToList(int number, List<ChampionStats> listToSort, List<SummonerWithChampion> listToAddTo, String type, Summoner s) {
+  List<ChampionStats> temp = listToSort;
+  sortByChampionStats(type, temp);
+  for (int i = 0; i < number; i++) {
+    if (temp.elementAt(i).champion.roles.contains(type)) {
+      listToAddTo.add(new SummonerWithChampion(s, temp.elementAt(i)));
+    }
+  }
+}
+
+bool checkForUniqueSummoner(Summoner t, Summoner m, Summoner j, Summoner a, Summoner s) {
+  Map<String, String> names = new Map();
+
+  if(names.containsKey(t.getName())) return false;
+  names[t.getName()] = "";
+
+  if(names.containsKey(m.getName())) return false;
+  names[m.getName()] = "";
+
+  if(names.containsKey(j.getName())) return false;
+  names[j.getName()] = "";
+
+  if(names.containsKey(a.getName())) return false;
+  names[a.getName()] = "";
+
+  if(names.containsKey(s.getName())) return false;
+  names[s.getName()] = "";
+
+  return true;
+}
+
+void displayLineup(Lineup lineup) {
+  TableRowElement topRow = SummonerDisplayComponent.buildPlayerRoleComponent(lineup.top.summoner, "Top");
+  TableRowElement topSummonerRow = ChampionDisplayComponent.buildComponent(lineup.top.stats, "#FFFFFF");
+
+  TableRowElement midRow = SummonerDisplayComponent.buildPlayerRoleComponent(lineup.mid.summoner, "Mid");
+  TableRowElement midSummonerRow = ChampionDisplayComponent.buildComponent(lineup.mid.stats, "#FFFFFF");
+
+  TableRowElement adcRow = SummonerDisplayComponent.buildPlayerRoleComponent(lineup.adc.summoner, "Adc");
+  TableRowElement adcSummonerRow = ChampionDisplayComponent.buildComponent(lineup.adc.stats, "#FFFFFF");
+
+  TableRowElement jungleRow = SummonerDisplayComponent.buildPlayerRoleComponent(lineup.jungle.summoner, "Jungle");
+  TableRowElement jungleSummonerRow = ChampionDisplayComponent.buildComponent(lineup.jungle.stats, "#FFFFFF");
+
+  TableRowElement supportRow = SummonerDisplayComponent.buildPlayerRoleComponent(lineup.support.summoner, "Support");
+  TableRowElement supportSummonerRow = ChampionDisplayComponent.buildComponent(lineup.support.stats, "#FFFFFF");
 
   var element = querySelector('#summoner-table');
   var header = element.children.elementAt(0);
@@ -148,6 +264,27 @@ void generateSummonerPositionsSimple(Summoner s1, Summoner s2, Summoner s3, Summ
   element.children.add(supportSummonerRow);
 }
 
+bool checkForUniqueChampions(ChampionStats t, ChampionStats m, ChampionStats j, ChampionStats a, ChampionStats s) {
+  Map<String, String> names = new Map();
+
+  if(names.containsKey(t.champion.name)) return false;
+  names[t.champion.name] = "";
+
+  if(names.containsKey(m.champion.name)) return false;
+  names[m.champion.name] = "";
+
+  if(names.containsKey(j.champion.name)) return false;
+  names[j.champion.name] = "";
+
+  if(names.containsKey(a.champion.name)) return false;
+  names[a.champion.name] = "";
+
+  if(names.containsKey(s.champion.name)) return false;
+  names[s.champion.name] = "";
+
+  return true;
+}
+
 ChampionStats getBestAdcScore(Summoner s) {
   double score = -100.0;
   ChampionStats highest = s.getChampionStats()[0];
@@ -163,104 +300,44 @@ ChampionStats getBestAdcScore(Summoner s) {
   return highest;
 }
 
-ChampionStats getBestTopScore(Summoner s) {
-  double score = -100.0;
-  ChampionStats highest = s.getChampionStats()[0];
-  for (ChampionStats c in s.getChampionStats()) {
-    if (c.champion.roles.contains("Top")) {
-      if (c.topScore > score) {
-        highest = c;
-        score = c.topScore;
-      }
-    }
-  }
-
-  return highest;
-}
-
-ChampionStats getBestMidScore(Summoner s) {
-  double score = -100.0;
-  ChampionStats highest = s.getChampionStats()[0];
-  for (ChampionStats c in s.getChampionStats()) {
-    if (c.champion.roles.contains("Mid")) {
-      if (c.midScore > score) {
-        highest = c;
-        score = c.midScore;
-      }
-    }
-  }
-
-  return highest;
-}
-
-ChampionStats getBestJungleScore(Summoner s) {
-  double score = -100.0;
-  ChampionStats highest = s.getChampionStats()[0];
-  for (ChampionStats c in s.getChampionStats()) {
-    if (c.champion.roles.contains("Jungle")) {
-      if (c.jungleScore > score) {
-        highest = c;
-        score = c.jungleScore;
-      }
-    }
-  }
-
-  return highest;
-}
-
-ChampionStats getBestSupportScore(Summoner s) {
-  double score = -100.0;
-  ChampionStats highest = s.getChampionStats()[0];
-  for (ChampionStats c in s.getChampionStats()) {
-    if (c.champion.roles.contains("Support")) {
-      if (c.supportScore > score) {
-        highest = c;
-        score = c.supportScore;
-      }
-    }
-  }
-
-  return highest;
-}
-
-void sort(String sortType, List toSort) {
+void sortByChampionStats(String sortType, List<ChampionStats> toSort) {
   switch (sortType) {
     case "Adc" :
-      toSort.sort((a, b) => _getAdcScore(b).compareTo(_getAdcScore(a)));
+      toSort.sort((a, b) => _getAdcScoreChampionStats(b).compareTo(_getAdcScoreChampionStats(a)));
       break;
     case "Mid" :
-      toSort.sort((a, b) => _getMidScore(b).compareTo(_getMidScore(a)));
+      toSort.sort((a, b) => _getMidScoreChampionStats(b).compareTo(_getMidScoreChampionStats(a)));
       break;
     case "Top" :
-      toSort.sort((a, b) => _getTopScore(b).compareTo(_getTopScore(a)));
+      toSort.sort((a, b) => _getTopScoreChampionStats(b).compareTo(_getTopScoreChampionStats(a)));
       break;
     case "Support" :
-      toSort.sort((a, b) => _getSupportScore(b).compareTo(_getSupportScore(a)));
+      toSort.sort((a, b) => _getSupportScoreChampionStats(b).compareTo(_getSupportScoreChampionStats(a)));
       break;
     case "Jungle" :
-      toSort.sort((a, b) => _getJungleScore(b).compareTo(_getJungleScore(a)));
+      toSort.sort((a, b) => _getJungleScoreChampionStats(b).compareTo(_getJungleScoreChampionStats(a)));
       break;
   }
 }
 
-double _getAdcScore(SummonerWithChampion cs) {
-  return cs.stats.adcScore;
+double _getAdcScoreChampionStats(ChampionStats cs) {
+  return cs.adcScore;
 }
 
-double _getMidScore(SummonerWithChampion cs) {
-  return cs.stats.midScore;
+double _getMidScoreChampionStats(ChampionStats cs) {
+  return cs.midScore;
 }
 
-double _getTopScore(SummonerWithChampion cs) {
-  return cs.stats.topScore;
+double _getTopScoreChampionStats(ChampionStats cs) {
+  return cs.topScore;
 }
 
-double _getSupportScore(SummonerWithChampion cs) {
-  return cs.stats.supportScore;
+double _getSupportScoreChampionStats(ChampionStats cs) {
+  return cs.supportScore;
 }
 
-double _getJungleScore(SummonerWithChampion cs) {
-  return cs.stats.jungleScore;
+double _getJungleScoreChampionStats(ChampionStats cs) {
+  return cs.jungleScore;
 }
 
 
