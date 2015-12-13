@@ -54,15 +54,15 @@ Future getSummonerData(Event e) async {
 
   querySelector("#progressBar").style.visibility = "visible";
 
-  summoner1 = await serverRequests.buildSummoner(inputElement1.value);
+  summoner1 = await serverRequests.buildSummoner(inputElement1.value.toLowerCase());
   await sleep5();
-  summoner2 = await serverRequests.buildSummoner(inputElement2.value);
+  summoner2 = await serverRequests.buildSummoner(inputElement2.value.toLowerCase());
   await sleep5();
-  summoner3 = await serverRequests.buildSummoner(inputElement3.value);
+  summoner3 = await serverRequests.buildSummoner(inputElement3.value.toLowerCase());
   await sleep5();
-  summoner4 = await serverRequests.buildSummoner(inputElement4.value);
+  summoner4 = await serverRequests.buildSummoner(inputElement4.value.toLowerCase());
   await sleep5();
-  summoner5 = await serverRequests.buildSummoner(inputElement5.value);
+  summoner5 = await serverRequests.buildSummoner(inputElement5.value.toLowerCase());
 
   getPresetSelections(summoner1, champion1Element, role1Element);
   getPresetSelections(summoner2, champion2Element, role2Element);
@@ -200,6 +200,7 @@ Lineup generateBestLineup(List<SummonerWithChampion> top, List<SummonerWithChamp
 }
 
 void addToList(int number, List<ChampionStats> listToSort, List<SummonerWithChampion> listToAddTo, String type, Summoner s) {
+  number = s.getChampionStats().length < number ? s.getChampionStats().length : number;
   List<ChampionStats> temp = listToSort;
   sortByChampionStats(type, temp);
   for (int i = 0; i < number; i++) {

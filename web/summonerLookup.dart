@@ -31,7 +31,7 @@ Future getSummonerData(Event e) async {
 
   querySelector("#progressBar").style.visibility = "visible";
 
-  summoner = await serverRequests.buildSummoner(inputElement.value);
+  summoner = await serverRequests.buildSummoner(inputElement.value.toLowerCase());
 
   DivElement summonerDiv = SummonerDisplayComponent.buildComponent(summoner);
 

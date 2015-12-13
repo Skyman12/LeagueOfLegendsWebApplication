@@ -40,7 +40,7 @@ class Summoner {
 
   ChampionStats getSpecificChampionStats(String champion) {
     for (ChampionStats cs in _championStats) {
-      if (cs.champion.name == champion) {
+      if (cs.champion.name.toLowerCase() == champion.toLowerCase()) {
         return cs;
       }
     }

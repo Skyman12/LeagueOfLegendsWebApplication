@@ -11,12 +11,7 @@ class LeagueOfLegendsServerRequests {
   Map summonerRank;
   Map rankedStatsData;
 
-  var host = "127.0.0.1:8081";
-
-  LeagueOfLegendsServerRequests() {
-    _getStaticChampionInformation();
-    _addToChampionRoles();
-  }
+  var host = "lolteamarchitect.elasticbeanstalk.com";
 
   Future<Summoner> buildSummoner(String summonerName) async {
     if (championMap == null) {
